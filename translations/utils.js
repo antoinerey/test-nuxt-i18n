@@ -1,13 +1,21 @@
 import zip from 'lodash.zip'
 
 export const fetchAndSaveTranslations = async locale => {
-  // Only load our translations once on server-side.
-  if (process.server && global.translations) return
+  if (process.server && global.translations && global.translations[locale]) {
+    return // Only load our translations once (per locale) on server-side.
+  }
 
   const { default: translations } = await import(`@/lang/${locale}.json`)
 
-  if (process.server) global.translations = translations
-  if (process.client) window.translations = translations
+  if (process.server) {
+    global.translations = global.translations || {}
+    global.translations[locale] = translations
+  }
+
+  if (process.client) {
+    window.translations = window.translations || {}
+    window.translations[locale] = translations
+  }
 }
 
 export const tokenize = (message, keys = []) => {

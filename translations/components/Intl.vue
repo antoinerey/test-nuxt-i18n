@@ -2,13 +2,23 @@
 import IntlMessageFormat from "intl-messageformat";
 import { tokenize } from "../utils";
 
-const getMessage = translation => {
-  if (process.server && global.translations[translation.id]) {
-    return global.translations[translation.id];
+const getMessage = (translation, locale) => {
+  if (
+    process.server &&
+    global.translations &&
+    global.translations[locale] &&
+    global.translations[locale][translation.id]
+  ) {
+    return global.translations[locale][translation.id];
   }
 
-  if (process.client && window.translations[translation.id]) {
-    return window.translations[translation.id];
+  if (
+    process.client &&
+    window.translations &&
+    window.translations[locale] &&
+    window.translations[locale][translation.id]
+  ) {
+    return window.translations[locale][translation.id];
   }
 
   return translation.defaultMessage;
@@ -35,7 +45,7 @@ export default {
   computed: {
     content() {
       const { locale } = this.$store.state;
-      const message = getMessage(this.message).replace(
+      const message = getMessage(this.message, locale).replace(
         /{(\w*), html}/g,
         `'{$1}'`
       );
