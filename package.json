@@ -1,0 +1,26 @@
+{
+  "name": "codesandbox-nuxt",
+  "version": "1.0.0",
+  "description": "Nuxt starter for CodeSandBox",
+  "author": "Nuxt.js Team",
+  "private": true,
+  "scripts": {
+    "dev": "HOST=0.0.0.0 node --icu-data-dir=node_modules/full-icu node_modules/.bin/nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "post-update": "yarn upgrade --latest",
+    "test": "jest"
+  },
+  "dependencies": {
+    "full-icu": "^1.3.0",
+    "intl": "1.2.5",
+    "intl-messageformat": "7.5.2",
+    "lodash.zip": "^4.2.0",
+    "nuxt": "^2.5.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "home.one": "Bonjour {name}",
+  "home.two": "Je suis né le {date, date}",
+  "home.three": "Le prix est de {count, number, EUR}"
+}
