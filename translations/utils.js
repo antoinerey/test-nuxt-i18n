@@ -1,4 +1,5 @@
 import zip from 'lodash.zip'
+import flat from 'lodash.flatten'
 
 export const fetchAndSaveTranslations = async locale => {
   if (process.server && global.translations && global.translations[locale]) {
@@ -26,7 +27,7 @@ export const tokenize = (message, keys = []) => {
   return keys
     .map(key => `{${key}}`)
     .reduce((messages, slot) => {
-      return messages.map(message => {
+      return flat(messages.map(message => {
         const parts = message.split(slot)
 
         if (parts.length === 1) {
@@ -37,7 +38,7 @@ export const tokenize = (message, keys = []) => {
           .from({ length: parts.length - 1 })
           .fill(slot)
 
-        return zip(parts, slots).flat()
-      }).flat().filter(Boolean)
+        return flat(zip(parts, slots))
+      })).filter(Boolean)
     }, [message])
 }
